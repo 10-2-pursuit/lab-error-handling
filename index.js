@@ -20,6 +20,10 @@ const exampleProducts = [
 */
 function getCartTotal(cart) {
   let result = 0;
+  if(cart.length == 0 || !cart){
+    throw "cart is empty";
+  }
+  
   for (let product of cart) {
     result += product.priceInCents;
   }
@@ -37,6 +41,27 @@ function getCartTotal(cart) {
 */
 function filterProductsByPriceRange(products, min, max) {
   const result = [];
+  if(!products || products.length == 0){
+    throw "products is empty";
+    return result;
+  }
+  if(typeof(min) != "number" || typeof(max) != "number"){
+    throw "min or max is not a number";
+    return result;
+  }
+  if(max == 0){
+    throw "max is equal to 0";
+    return result;
+  }
+  if(min > max){
+    throw "min is greater than max";
+    return result;
+  }
+  if(!products["priceInCents"]){
+    throw "products does not have [priceInCents]";
+    return result;
+  }
+
   for (let product of products) {
     if (product.priceInCents >= min && product.priceInCents <= max) {
       result.push(product);
