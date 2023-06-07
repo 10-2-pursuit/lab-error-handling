@@ -40,29 +40,29 @@ function getCartTotal(cart) {
   - Any of the products in the `products` array does not have a `priceInCents` key.
 */
 function filterProductsByPriceRange(products, min, max) {
-  const result = [];
-  if(!products || products.length == 0){
+  
+
+  if(products.length == 0){
     throw "products is empty";
-    return result;
   }
   if(typeof(min) != "number" || typeof(max) != "number"){
     throw "min or max is not a number";
-    return result;
   }
   if(max == 0){
     throw "max is equal to 0";
-    return result;
   }
   if(min > max){
     throw "min is greater than max";
-    return result;
   }
-  if(!products["priceInCents"]){
-    throw "products does not have [priceInCents]";
-    return result;
+  if(min < 0 || max < 0){
+    throw "min max must not be negative";
   }
 
+  const result = [];
   for (let product of products) {
+    if(!product.priceInCents){
+      throw "products does not have [priceInCents]";
+    }
     if (product.priceInCents >= min && product.priceInCents <= max) {
       result.push(product);
     }
@@ -74,8 +74,17 @@ function filterProductsByPriceRange(products, min, max) {
   If any errors occur in this function, it should return `0`.
 */
 function getTotalOfAllProductsByPriceRange(products, min, max) {
-  const filteredProducts = filterProductsByPriceRange(products, min, max);
-  const total = getCartTotal(filteredProducts);
+  let filteredProducts;
+  let total;
+  try{
+    filteredProducts = filterProductsByPriceRange(products, min, max);
+    total = getCartTotal(filteredProducts);
+    
+  } catch(err){
+    if(err){
+      return 0;
+    }
+  }
 
   return total;
 }
