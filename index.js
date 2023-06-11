@@ -1,3 +1,5 @@
+const { error } = require("console");
+
 /*
   Do not change the line below. If you'd like to run code from this file, you may use the `exampleSongData` variable below to gain access to tickets data. This data is pulled from the `data/songs.js` file.
 
@@ -19,7 +21,12 @@ const exampleProducts = [
   - The `cart` array is empty.
 */
 function getCartTotal(cart) {
+  if(!cart.length) {
+    throw "Cart is empty.";
+  }
+ 
   let result = 0;
+
   for (let product of cart) {
     result += product.priceInCents;
   }
@@ -37,7 +44,27 @@ function getCartTotal(cart) {
 */
 function filterProductsByPriceRange(products, min, max) {
   const result = [];
+
+  if (typeof min !== "number" || typeof max !== "number") {
+    throw new Error("Parameters 'min' and 'max' must be numbers.");
+  }
+  if (products.length === 0) {
+    throw new Error("Products array is empty.");
+  }
+  if (max <= 0) {
+    throw new Error("Max must be greater than zero.");
+  }
+  if (min > max) {
+    throw new Error("Min must be less than or equal to max.");
+  }
+  if (min < 0 || max < 0) {
+    throw new Error("min and max cannot be negative.");
+  }
+
   for (let product of products) {
+    if (!product.hasOwnProperty('priceInCents')) {
+      throw new Error("Products have no price.");
+    }
     if (product.priceInCents >= min && product.priceInCents <= max) {
       result.push(product);
     }
@@ -49,10 +76,19 @@ function filterProductsByPriceRange(products, min, max) {
   If any errors occur in this function, it should return `0`.
 */
 function getTotalOfAllProductsByPriceRange(products, min, max) {
-  const filteredProducts = filterProductsByPriceRange(products, min, max);
-  const total = getCartTotal(filteredProducts);
-
-  return total;
+  let filteredProducts;
+  try {
+    filteredProducts = filterProductsByPriceRange(products, min, max);
+  } catch (err) {
+    return 0;
+  }
+  let total;
+  try {
+    total = getCartTotal(filteredProducts);
+  } catch (err) {
+    return 0;
+  }
+  return total || 0;
 }
 
 module.exports = {
