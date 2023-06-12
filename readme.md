@@ -9,7 +9,7 @@ A current set of functions correctly filters and calculates the total for all pr
 1. Navigate to the cloned repository's directory on your command line. Then, run the following command:
 
    ```
-   npm install
+   npm install ..
    ```
 
    This will install the libraries needed to run the tests.
