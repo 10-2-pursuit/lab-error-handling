@@ -51,7 +51,6 @@ if (min < 0 || max < 0) {
   throw new Error("Both min and max values are negative")
 }
 
-
 if(max === 0 || min > max) {
   throw new Error("There was an error with the price range.");
 }
@@ -80,8 +79,7 @@ try {
   const filteredProducts = filterProductsByPriceRange(products, min, max);
   const total = getCartTotal(filteredProducts);
   return total;
-} 
-catch (error) {
+} catch (error) {
   console.log("An error occurred!", error);
   return 0;
 } if (products.length === 0) {
@@ -91,6 +89,21 @@ return 0;
    console.log("An error has occured!", Error);
   return 0;  
 }
+}
+
+}
+/*
+  If any errors occur in this function, it should return `0`.
+*/
+function getTotalOfAllProductsByPriceRange(products, min, max) {
+  try {
+    const filteredProducts = filterProductsByPriceRange(products, min, max);
+    const total = getCartTotal(filteredProducts);
+    return total;
+  } catch (error) {
+    console.log("An error occurred!", error);
+    return 0;
+  }
 }
 
 const products = exampleProducts;

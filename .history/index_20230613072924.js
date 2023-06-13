@@ -43,54 +43,35 @@ function getCartTotal(cart) {
 function filterProductsByPriceRange(products, min, max) {if (products.length === 0) {
   throw new Error("There are no products.");
 }
-if (isNaN(min) || isNaN(max)) {
-  throw new Error("The min or max value is not a number.")
-};
-
-if (min < 0 || max < 0) {
-  throw new Error("Both min and max values are negative")
+if ((isNaN(min) || isNaN(max)) {
+  thropw
 }
 
 
-if(max === 0 || min > max) {
+|| min < 0 || max < 0 || max === 0 || min > max) {
   throw new Error("There was an error with the price range.");
 }
-
 const result = [];
-
-for (let product of products) {
-  if (!product.priceInCents) {
-    throw new Error("One of the products has no price.");
+  for (let product of products) {
+    if (product.priceInCents >= min && product.priceInCents <= max) {
+      result.push(product);
+    }
   }
-
-  if (product.priceInCents >= min && product.priceInCents <= max) {
-    result.push(product);
-  }
-}
-
-return result;
+  return result;
 }
 
 /*
-If any errors occur in this function, it should 
-return `0`.
+  If any errors occur in this function, it should return `0`.
 */
 function getTotalOfAllProductsByPriceRange(products, min, max) {
-try {
-  const filteredProducts = filterProductsByPriceRange(products, min, max);
-  const total = getCartTotal(filteredProducts);
-  return total;
-} 
-catch (error) {
-  console.log("An error occurred!", error);
-  return 0;
-} if (products.length === 0) {
-  console.log("An error occurred!", error);
-return 0;
-} if (!product.priceInCents) {
-   console.log("An error has occured!", Error);
-  return 0;  
-}
+  try {
+    const filteredProducts = filterProductsByPriceRange(products, min, max);
+    const total = getCartTotal(filteredProducts);
+    return total;
+  } catch (error) {
+    console.log("An error occurred!", error);
+    return 0;
+  }
 }
 
 const products = exampleProducts;

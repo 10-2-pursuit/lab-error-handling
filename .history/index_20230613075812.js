@@ -43,14 +43,13 @@ function getCartTotal(cart) {
 function filterProductsByPriceRange(products, min, max) {if (products.length === 0) {
   throw new Error("There are no products.");
 }
-if (isNaN(min) || isNaN(max)) {
+if (min.isNaN() || max.isNaN()) {
   throw new Error("The min or max value is not a number.")
 };
 
 if (min < 0 || max < 0) {
   throw new Error("Both min and max values are negative")
 }
-
 
 if(max === 0 || min > max) {
   throw new Error("There was an error with the price range.");
